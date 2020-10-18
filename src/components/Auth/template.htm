@@ -1,0 +1,25 @@
+<div class="auth">
+  <div class="title">Login</div>
+  <div class="description">Пожалуйста, введите ваши учётные данные</div>
+  <div class="line"></div>
+  <form v-on:submit.prevent="Auth">
+    <div class="login">
+      <input id="login" name="login" type="text" class="input" v-model="login" autocomplete="off">
+      <label for="login" :class="(login && login !='') ? 'active' : '' ">Логин</label>
+    </div>
+    <div class="password">
+      <input id="password" name="password" type="password" class="input" v-model="password" autocomplete="off">
+      <label for="password" :class="(password && password !='') ? 'active' : '' ">Пароль</label>
+    </div>
+    <div >
+      <label class="checkbox">
+        <input v-model="remember" type="checkbox">
+        <div class="checkbox-input" :class="(remember) ? 'checked' : ''"></div>
+        <div class="checkbox-label">Запомнить меня</div>
+      </label>
+    </div>
+    <button class="button" type="submit">
+      Login
+    </button>
+  </form>
+</div>

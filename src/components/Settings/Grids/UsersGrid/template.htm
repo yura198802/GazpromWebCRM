@@ -1,0 +1,78 @@
+<div id="users_div">
+
+  <div class="btns_div">
+    <DxButton ... text="" hint="Управление пользователями" type="default" icon="user" styling-mode="outlined"
+      @click="onManageBtnClick">
+    </DxButton>
+    <DxButton ... :disabled="disableBtn" text="" hint="Изменить" type="default" icon="edit" styling-mode="outlined" @click="showEditor">
+    </DxButton>
+    <DxButton ... :disabled="disableBtn" text="" hint="Удалить из текущей роли." type="danger" icon="minus" styling-mode="outlined"
+      @click="minusClick">
+    </DxButton>
+  </div>
+  <!--@focused-row-changed="selectionChanged"-->
+  <DxDataGrid :data-source="users" ref="usersGrid" :show-borders="true" key-expr="id" :focused-row-enabled="true"
+    :on-focused-cell-changing="onFocusedCellChanging">
+    <DxSelection mode="single" />
+    <DxPaging :enabled="false"/>
+          <DxSummary>
+            <DxTotalItem
+              column="fullName"
+              summary-type="count"
+            />
+          </DxSummary>
+    <DxColumn data-field="fullName" caption="Пользователь" key-expr="id"></DxColumn>
+  </DxDataGrid>
+  <DxPopup id="mange_popup" :visible.sync="isShowManager" :show-title=true title="Управление пользователем."
+    :show-close-button=true :drag-enabled="false" :close-on-outside-click="false" :shading="true"
+    @hiding="onHidingManager" @showing="onShowingManager">
+
+    <div id="manage_div">
+      <div id="free_div">
+        <DxDataGrid id="free_grid" :visible.sync="isShowManager" :data-source="freeUsers" ref="freeGrid"
+          :show-borders="true" key-expr="id" :focused-row-enabled="true"
+          :on-focused-cell-changing="onFocusedFreeChanging">
+          <DxSelection mode="single" />
+          <DxPaging :enabled="false"/>
+          <DxSummary>
+            <DxTotalItem
+              column="fullName"
+              summary-type="count"
+            />
+          </DxSummary>
+          <DxColumn data-field="fullName" caption="Пользователь" key-expr="id"></DxColumn>
+        </DxDataGrid>
+      </div>
+      <div id="panel_div">
+        <div class="btns_div">
+          <DxButton ... text="" hint="Создать" type="success" icon="add" styling-mode="outlined"
+            @click="onCreateBtnClick">
+          </DxButton>
+          <DxButton ... :disabled="disableBtn" text="" hint="Изменить" type="default" icon="edit" styling-mode="outlined"
+            @click="onEditBtnClickM">
+          </DxButton>
+          <DxButton ... :disabled="disableBind" text="Добавить к роли" hint="Добавить к роли" type="default" icon="plus" styling-mode="outlined"
+          @click="bindClick">
+        </DxButton>
+          <DxButton ... :disabled="disableBtn" text="" hint="Удалить" type="danger" icon="remove" styling-mode="outlined"
+            @click="removeClick">
+          </DxButton>          
+        </div>
+        <div id = "editor_div"> 
+          <transition name = "bounce">
+            <Editor v-if="isVisibleEditor" ref="forms" :is-visible.sync="isVisibleEditor" :user.sync="user" @accept:click = "acceptClick"  @cancel:click = "cancelClick" :create-mode.sync = "createMode" />        
+        </transition>
+        </div>
+      </div>
+    </div>
+  </DxPopup>
+  <DxPopup id="edit_popup" :visible.sync="isShowEditor" :show-title="false" 
+  :show-close-button=true :drag-enabled="false" :close-on-outside-click="false" :shading="true"
+  @hiding="onHidingManager" >
+      <div id = "editor_div"> 
+        <transition name = "bounce">
+          <Editor ref="forms" :is-visible.sync="isVisibleEditor" :user.sync="user" @accept:click = "acceptClick"  @cancel:click = "cancelClick" :create-mode.sync = "createMode" />        
+      </transition>
+  </div>
+</DxPopup>
+</div>

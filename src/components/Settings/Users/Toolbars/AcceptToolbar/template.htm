@@ -1,0 +1,8 @@
+<div>
+  <DxToolbar class="tbar" :visible.sync="this.visibleToolbar">
+    <DxItem class="btns" :options="saveBtnOptions" location="after" widget="dxButton"
+      :visible.sync="this.visibleSave"  :width="100"/>
+    <DxItem class="btns" :options="closeBtnOptions" location="after" widget="dxButton"
+      :visible.sync="this.visibleClose" :width="100"/>
+  </DxToolbar>
+</div>

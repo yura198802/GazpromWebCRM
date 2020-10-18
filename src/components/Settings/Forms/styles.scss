@@ -1,0 +1,30 @@
+#forms_grid {
+    //min-height: calc(70vh - 75px);
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+    bottom: 0%;
+ }
+ #tbar{
+  margin:5px 0px 5px 0px ;
+ }
+ #forms_div { 
+   // padding: 10px; position:fixed; width: 100%; 
+  //  vertical-align: middle;
+height: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    vertical-align: middle;
+     //padding: 10px;
+    //display: block;
+  //  box-sizing : border-box;
+  
+ //   padding: 10px;
+   // vertical-align: middle;
+ }
+ #btns_id{
+  //  float:right; 
+    bottom: 0%;
+   // right:0px;
+    margin: 25px 0px 5px 5px;
+}

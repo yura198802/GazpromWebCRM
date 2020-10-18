@@ -1,0 +1,187 @@
+<div style="height: 100%">
+  <div style="height: 100%">
+    <splitpanes class="default-theme" horizontal>
+      <pane min-size="40" :max-size="maxSizePanelGrid">
+        <DxDataGrid :style="{padding: '3px',width:'100%', height: '100%'}"
+                    :data-source="models"
+                    id="gridContainer"
+                    :remote-operations="false"
+                    :allow-column-reordering="true"
+                    :row-alternation-enabled="true"
+                    :allow-column-resizing="true"
+                    :focused-row-enabled="true"
+                    :focused-row-key.sync="focusedRowKey"
+                    :show-borders="true"
+                    :keyExpr="keyModel"
+                    ref="dataGrid"
+                    :loadPanel="loadPanel"
+                    @exporting="onExporting"
+                    @focused-row-changed="onFocusedRowChanged"
+                    @toolbar-preparing="onToolbarPreparing($event)"
+        >
+          <DxFilterRow
+            :visible="true" filterOperations="startswith"
+            apply-filter="{key: 'auto',name: 'Immediately'}"
+          />
+          <DxHeaderFilter
+            :visible="true"
+          />
+          <DxSearchPanel
+            :visible="true"
+            :width="240"
+            placeholder="Поиск..."
+          />
+          <DxExport
+            :enabled="true"
+          />
+          <DxSummary>
+            <DxTotalItem
+              :column="keyModel"
+              summary-type="count"
+            />
+          </DxSummary>
+          <DxPaging :page-size="25" :enabled="true"/>
+          <DxPager
+            :show-page-size-selector="true"
+            :allowed-page-sizes="pageSizes"
+            :show-info="true"
+            :visible="true"
+          />
+          <DxSelection
+            show-check-boxes-mode="always"
+            :mode="multipleMode"
+          />
+
+          <DxColumn
+            :width="100"
+            :allow-sorting="false"
+            data-field="photo"
+            cell-template="cellTemplate"
+            caption="Фото"
+          />
+          <DxColumn
+            width="20%"
+            :allow-sorting="false"
+            data-field="surname"
+            caption="Фамилия"
+          />
+          <DxColumn
+            width="20%"
+            :allow-sorting="false"
+            data-field="name"
+            caption="Имя"
+          />
+          <DxColumn
+            width="20%"
+            :allow-sorting="false"
+            data-field="middlname"
+            caption="Отчество"
+          />
+          <DxColumn
+            width="20%"
+            :allow-sorting="false"
+            data-field="DateOfBirth"
+            caption="Дата рождения"
+          />
+          <DxColumn
+            width="20%"
+            :allow-sorting="false"
+            data-field="directory"
+            caption="Город"
+          />
+
+          <template #cellTemplate="{ data }">
+            <img :src="data.value">
+          </template>
+        </DxDataGrid>
+      </pane>
+      <pane v-if="!hideDetailPane">
+        <DxTabPanel id="content12" :selectedItem="selectedTabPanel"
+                    :data-source="tabPageDetails"
+                    :show-nav-buttons="true"
+                    item-title-template="title"
+                    item-template="itemTemplate"
+                    :defer-rendering="false"
+                    height="100%"
+        >
+          <template #title="{ data: page }">
+            <div>
+              <span>{{ page.text }}</span>
+            </div>
+          </template>
+          <template #itemTemplate="{ data: page }">
+            <CoreView style="height: 100%" :ref="'coreView' + page.idModel"
+                      :template-data="page"
+            />
+          </template>
+        </DxTabPanel>
+      </pane>
+    </splitpanes>
+  </div>
+
+  <DxPopup
+    :width="widthDetail"
+    :height="heightDetail"
+    :show-title="true"
+    :title.sync="captionEditFormModel"
+    :drag-enabled="false"
+    :close-on-outside-click="true"
+    :visible.sync="isVisibleEditForm"
+    :toolbarItems="toolbarContentDetail"
+    :showCloseButton="false"
+    @shown="onInitialized"
+  >
+    <div class="popup-property-details">
+      <DxForm
+        :form-data="editModel"
+        :read-only="false"
+        :items="propertyItems"
+        :show-validation-summary="true"
+        validation-group="DesignerModelEditor"
+        :show-colon-after-label="true"
+        :scrollingEnabled="true"
+      >
+
+        <DxGroupItem caption="Общие свойства" :colCount="2">
+          <DxSimpleItem data-field="infoClient" editor-type="dxCheckBox">
+          </DxSimpleItem>
+        </DxGroupItem>
+
+
+        <DxGroupItem caption="Общие свойства" :colCount="2">
+          <DxSimpleItem data-field="isKey" editor-type="dxCheckBox">
+            <DxLabel text="Признак ключа"/>
+          </DxSimpleItem>
+          <DxSimpleItem data-field="name">
+            <DxRequiredRule message="Поле обязательно для заполнения"/>
+            <DxLabel text="Имя в БД"/>
+          </DxSimpleItem>
+          <DxSimpleItem data-field="displayName">
+            <DxLabel text="Имя на экране"/>
+          </DxSimpleItem>
+          <DxSimpleItem data-field="tableName">
+            <DxLabel text="Таблица(не заполнять если основная)"/>
+          </DxSimpleItem>
+          <DxSimpleItem data-field="maxLength" editorType="dxNumberBox">
+            <DxRequiredRule message="Поле обязательно для заполнения"/>
+            <DxLabel text="Длина поля (для строковых данных)"/>
+          </DxSimpleItem>
+          <DxSimpleItem data-field="isVirtual" editor-type="dxCheckBox">
+            <DxLabel text="Виртуальное поле"/>
+          </DxSimpleItem>
+        </DxGroupItem>
+
+      </DxForm>
+    </div>
+  </DxPopup>
+
+  <DxLoadPanel
+    :visible="false"
+    :show-indicator="true"
+    :show-pane="true"
+    :shading="true"
+    :close-on-outside-click="false"
+    shading-color="rgba(0,0,0,0.4)"
+  />
+
+</div>

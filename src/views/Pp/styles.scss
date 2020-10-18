@@ -1,0 +1,35 @@
+ #tb{
+    padding: 5px;
+    background-color: rgba(191, 191, 191, 0.15);
+    border: 1px solid #63161673;;
+    width: 100%;
+ }
+.dx-field{
+    padding: 10px 5px;
+    left: 10px;
+    width: 275px;
+}
+
+ 
+.dx-button{
+    padding: 10px 5px;
+    border: 0px ;
+}
+.button {
+    color: #e6f1ecdc;  
+    background-color: #0e4d2b;  
+}
+
+#gridContainer{  
+    padding: 5px;
+    margin: 5px 50px;
+    height:  calc(100% - 120px);
+}
+
+.errors{
+    color:  #d9534f;
+}
+.info{
+    background-color: rgba(191, 191, 191, 0.15);
+    text-align: center;
+}

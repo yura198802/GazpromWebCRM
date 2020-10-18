@@ -1,0 +1,14 @@
+<DxPopup :visible="isShow" :show-title=true :title="getTitle" :show-close-button=false :drag-enabled="false"
+  :close-on-outside-click="false" :shading="true" width="400"  height="200" >
+  <div id="editor">
+    <DxForm id="editorForm" :visible="isShow" ref="form" :form-data="this.role" width="350">
+      <DxSimpleItem data-field="name">
+        <DxLabel text="Название роли" />
+      </DxSimpleItem>
+    </DxForm>
+    <div>
+      <AcceptTbar :visible-toolbar="isShow" :visible-close="isShow" :visible-save="isShow" :save="saveBtnClick"
+        :close="closeBtnClick" />
+    </div>
+  </div>
+</DxPopup>

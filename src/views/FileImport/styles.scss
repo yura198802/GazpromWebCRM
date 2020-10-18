@@ -1,0 +1,59 @@
+
+.container{
+    padding: 20px;
+}
+.fileuploader-container{
+    border: 1px solid #d3d3d3;
+    margin: 10px 20px 10px 20px;
+    padding: 10px 20px;
+    width: 75%;
+}
+.preview-container{
+    border: 1px solid #d3d3d3;
+    margin: 20px 20px 10px 20px;
+    padding: 10px 20px;
+    width: 75%;
+}
+.previewerrors{
+    color:  #d9534f;
+}
+
+.import-container{
+    border: 1px solid #d3d3d3;
+    margin: 20px 20px 20px 20px;
+    padding: 10px 20px 20px 20px;
+    width: 75%;
+}
+.importerrors{
+    color:  #d9534f;
+}
+
+.button {
+    margin-top: 10px;
+    margin-right: 20px;
+    float: center;
+    color: #e6f1ecdc;  
+    background-color: #0e4d2b;  
+}
+
+
+/deep/ .dx-fileuploader-button {  
+    color: #e6f1ecdc;  
+    background-color: #0e4d2b;  
+  }  
+
+
+
+.options {
+    padding: 20px;
+    background-color: rgba(191, 191, 191, 0.15);
+    position: absolute;
+    right: 0;
+    top:50px;
+    bottom: 10px;
+    // width: 260px;
+    width: 20%
+}
+.options  > div {
+    padding-top: 25px;
+}

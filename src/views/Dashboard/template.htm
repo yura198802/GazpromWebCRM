@@ -1,0 +1,54 @@
+<div>
+  <!-- <Users/> -->
+  <div>
+    <splitpanes class="default-theme" style="height: 100%;width:100%;">
+      <pane min-size="15" max-size="20" >
+        <DxTreeView style="height: 100%; width:100%; "
+          id="treeview"
+          :items="menus"
+          key-expr="id" heightTree
+          data-structure="plain"
+          parent-id-expr="parentId"
+          :search-enabled="true"
+          :search-mode="searchMode"
+          @item-click="selectItemMenu"
+        />
+      </pane>
+      <pane>
+        <DxSortable
+          filter=".dx-tab"
+          item-orientation="horizontal"
+        >
+          <div>
+            <DxTabPanel id="content" class="dx-theme-background-color" :selectedItem="selectedTabPanel"
+                        :data-source.sync="tabPages"
+                        :show-nav-buttons="true"
+                        :repaint-changes-only="true"
+                        :animation-enabled="true"
+                        :height="heightTree"
+                        item-title-template="title"
+                        item-template="itemTemplate"
+                        :defer-rendering="false">
+              <template #title="{ data: page }">
+                <div>
+                  <img src="../../assets/home.svg" width="24" height="24" alt="image description" class="image-tab"/>
+                  <!-- <span class="image-tab"></span> -->
+                  <span>{{ page.text }}</span>
+                  <i
+                    class="dx-icon dx-icon-close"
+                    @click="closeButtonHandler(page)"
+                  />
+                </div>
+              </template>
+              <template #itemTemplate="{ data: page }">
+                <CoreView
+                  :template-data="page"
+                />
+              </template>
+            </DxTabPanel>
+          </div>
+        </DxSortable>
+      </pane>
+    </splitpanes>
+  </div>
+</div>

@@ -1,0 +1,248 @@
+  <div class="form">
+  <!-- <div id="dataGrid">
+    <DxDataGrid 
+    :data-source="models"
+    :remote-operations="false"
+    :allow-column-reordering="true"
+    :row-alternation-enabled="true"
+    :allow-column-resizing="true"
+    :focused-row-enabled="true"
+    :show-borders="true"
+    keyExpr="id"
+    @toolbar-preparing="onToolbarPreparing($event)"
+    @focused-row-changed="onFocusedRowChanged"
+  >
+    <DxFilterRow
+        :visible="true"
+        apply-filter="{key: 'auto',name: 'Immediately'}"
+      />
+      <DxSearchPanel
+        :visible="true"
+        :width="240"
+        placeholder="Поиск..."
+      />
+      
+      <DxColumn 
+      type="buttons"
+      :buttons="editButtons" :width="65"
+      >
+      </DxColumn>  
+    <DxColumn
+      data-field="id"
+      caption="ID" :width="65"
+    />
+    <DxColumn
+      data-field="displayName"
+      caption="Имя на экране"
+    />
+    <DxColumn
+      data-field="name"
+      caption="Имя в БД"
+    />
+    <DxColumn
+      data-field="order"
+      caption="Позиция" :width="90"
+    />
+    <DxColumn
+      data-field="maxLength"
+      caption="Длина поля" :width="90"
+    />
+    <DxColumn
+      data-field="typeControl"
+      caption="Тип редактора">
+      <DxLookup
+      :data-source="typeControl"
+      value-expr="id"
+      display-expr="caption"
+    />
+    </DxColumn>
+    <DxColumn
+      data-field="defaultTypeAccec"
+      caption="Доступ">
+      <DxLookup
+      :data-source="typeAccec"
+      value-expr="id"
+      display-expr="caption"
+    />
+    </DxColumn>
+    <DxColumn
+      data-field="typeProfileForm"
+      caption="Обязательность">
+      <DxLookup
+      :data-source="typeProfileForm"
+      value-expr="id"
+      display-expr="caption"
+    />
+    </DxColumn>
+    
+    <DxColumn
+      data-field="isKey"
+      caption="Признак ключа" :width="120"
+    />
+    <DxColumn
+      data-field="isDeleted"
+      caption="Удален" :width="100"
+    />
+  </DxDataGrid>
+  </div> -->
+  <div>
+    <multipane class="custom-resizer" layout="vertical" v-bind:style="{ height: heightTree + 'px' }">
+      <div class="pane" v-bind:style="{ width: widthtLeftPanel + 'px' }">
+        ываываываываываываыва
+      </div>
+      <multipane-resizer></multipane-resizer>
+      <div class="pane" :style="{ flexGrow: 1 }">
+        <DxToolbar :items="toolbarContentBot"/>
+        <div >
+          <div class="caption">Выбор отслеживаемого игрока:</div>
+          <div style="padding-top: 10px;"> 
+            <DxSelectBox 
+            :dataSource="bots"
+            valueExpr="id"
+            display-expr="name"
+            @selectionChanged="selectionPlayer"
+          />
+          <DxForm style="padding-top:10px;"
+            :form-data="selectedBot"
+            :read-only="true"
+            :show-colon-after-label="true"
+            :visible="visibleFormStats"
+          >
+            <DxSimpleItem data-field="myCBuyIn">
+              <DxLabel text="Сумма всех байинов"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="myCNetWon">
+              <DxLabel text="Общий результат"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="tournaments">
+              <DxLabel text="Всего турниров"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="itm">
+              <DxLabel text="ITM %"/>
+              <template #default>
+              <DxNumberBox :value.sync="selectedBot.itm"
+                format="#,##0.00"
+              />
+              </template>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="roi">
+              <DxLabel text="ROI %"/>              
+              <template #default>
+                <DxNumberBox :value.sync="selectedBot.roi"
+                  format="#,##0.00"
+                />
+              </template>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="cashes">
+              <DxLabel text="В призах"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="avgFinish">
+              <DxLabel text="Среднее итоговое место"/>             
+              <template #default>
+                <DxNumberBox :value.sync="selectedBot.avgFinish"
+                  format="#,##0.00"
+                />
+              </template>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="place1">
+              <DxLabel text="1st"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="place2">
+              <DxLabel text="2nd"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="place3">
+              <DxLabel text="3rd"/>
+            </DxSimpleItem>
+          </DxForm>
+          </div>          
+        </div> 
+      </div>
+    </multipane>
+    </div>
+  <!-- <DxPopup id="fieldComponent"
+      :width="660"
+      :height="700"
+      :show-title="true"
+      :title.sync="captionEditFormModel"
+      :drag-enabled="false"
+      :close-on-outside-click="true"
+      :visible.sync="isVisibleEditFormModel"
+    >
+      <div class="popup-property-details">
+        <DxForm
+        ref="fieldEditorModel"
+        :form-data="fieldModelData"
+        :read-only="false"
+        :show-validation-summary="true"
+        validation-group="FieldModelEditor"
+        :show-colon-after-label="true"
+        >
+        <DxSimpleItem data-field="displayName">
+          <DxRequiredRule message="Поле обязательно для заполнения" />
+          <DxLabel text="Имя на экране"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="name">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Имя в БД"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="tableName">
+          <DxLabel text="Таблица(не заполнять если основная)"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="order" editorType="dxNumberBox">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Позиция"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="maxLength" editorType="dxNumberBox">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Длина поля (для строковых данных)"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="typeControl" editorType="dxSelectBox" :editorOptions="typeControlOptions">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Тип редактора данных"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="typeAccec" editorType="dxSelectBox" :editorOptions="typeAccecOptions">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Доступ по умолчанию"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="typeProfileForm" editorType="dxSelectBox" :editorOptions="typeProfileFormOptions">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Обязательность"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="isDeleted" editor-type="dxCheckBox">
+          <DxLabel text="Удален"/>
+        </DxSimpleItem>   
+        <DxSimpleItem data-field="isKey" editor-type="dxCheckBox">
+          <DxLabel text="Признак ключа"/>
+        </DxSimpleItem>  
+        <DxEmptyItem />
+        </DxForm>
+        <div 
+            style="position:absolute;float:right; bottom:0px;right:0px;padding: 10px;">
+          <DxButton
+          icon="save"
+          type="success"
+          text="Сохранить"
+          v-on:click="saveModel"
+          validation-group="FieldModelEditor"
+          horizontal-alignment="right"
+        />        
+        <DxButton
+          icon="close"
+          type="normal"
+          text="Выход"
+          horizontal-alignment="right"
+          @click="closeFormEditor()"
+        />
+        </div>
+      </div>     
+  </DxPopup> -->
+
+  <DxLoadPanel
+      :visible.sync="loadingVisible"
+      :show-indicator="true"
+      :show-pane="true"
+      :shading="true"
+      :close-on-outside-click="false"
+      shading-color="rgba(0,0,0,0.4)"
+    />
+</div>

@@ -1,0 +1,36 @@
+
+<div id="btn_div">
+  <span>Выбор кнопок.</span>
+  <DxToolbar id="tbar"  >
+    <DxItem :options="acceptOptions" :visible = "true" location="before" widget="dxButton"  :disabled.sync="acceptDisabled"/>
+  </DxToolbar>
+  <DxTreeList id="btn_grid" ref="treeBtns"
+              :visible= "this.isShow"
+              :show-borders="true"
+              :data-source="this.btns"
+              :column-max-width="300"
+              :column-min-width="100"
+              :height = "height"
+              :show-row-lines="false"
+              key-expr="id" heightTree
+              parent-id-expr="parentId"
+              data-structure="plain"
+              :allow-column-resizing="true"
+              column-resizing-mode="widget"
+              :column-auto-width="true"
+              :focused-row-enabled="true">
+    <DxSearchPanel :visible="false" :width="250" />
+    <DxHeaderFilter :visible="false" />
+    <DxColumnChooser :enabled="false" />
+    <DxEditing :allow-updating="true" mode="cell" />
+    <DxColumn data-field="text" caption="Наименование кнопок" :allow-editing="false"></DxColumn>
+    <DxColumn data-field="typeAccess"  caption="Доступ" >
+      <DxLookup
+        :data-source="access"
+        value-expr="id"
+        display-expr="value"
+      />
+    </DxColumn>
+  </DxTreeList>
+  
+</div>

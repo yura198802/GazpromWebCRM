@@ -1,0 +1,31 @@
+<div id ="grid">
+  <div>
+      <TopToolbar :visible-toolbar="true" 
+    @add:click = "addClick"
+    @remove:click = "removeClick"
+    @edit:click = "editClick"
+    :edit-disabled = "rDisabled"
+    :remove-disabled = "rDisabled"
+    :visible-remove = "true"
+    :visible-edit= "true"
+    :visible-add= "true"  />
+        <span>Выбор роли для организации.</span>
+      <DxDataGrid id ="role_grid" :data-source="roles" ref="rolesGrid" :show-borders="true" key-expr="id"
+        :focused-row-enabled="true"
+        :focused-row-key.sync="focusedRowKey"
+        @focused-row-changed="onFocusedRowChanged"
+        @content-ready ="onReady"
+        @row-dbl-click = "rowDblClick">      
+        <DxSelection mode="single" />
+        <DxColumn data-field="name" caption="Наименование роли" key-expr="id"></DxColumn>
+      </DxDataGrid>
+  </div>
+  <div>
+    <EditorRole :is-create ="isCreate" id ="roles" :roles.sync="roles":role.sync="role" @edit:role="editRole" @create:role="onCreateRole" @close:editor="onCloseEditor" :is-show="showEditor"  />
+  </div>
+</div>
+
+<!--</div> 
+   <UsersToRole :role.sync="this.currentRole" @update:is-show = "this.closeUsersToRole" :is-show="this.usersToRoleVisible" :editor-width="600" :editor-height="700"
+      :show-close-btn="true" :show-save-btn="true" ref ="utr" />  
+</div>-->

@@ -1,0 +1,228 @@
+<div style="padding: 10px;">
+  <div id="dataGrid">
+    <DxTreeList style="padding: 3px;position:fixed; width:98%; height: 98%;"
+                :data-source="models"
+                :allow-column-reordering="true"
+                :show-row-lines="true"
+                :allow-column-resizing="true"
+                :focusedRowEnabled="true"
+                :show-borders="true"
+                keyExpr="id"
+                :wordWrapEnabled="true"
+                :autoExpandAll="true"
+                @toolbar-preparing="onToolbarPreparing($event)"
+                v-on:focusedRowChanged="onFocusedRowChanged"
+                ref="dataGrid"
+                v-on:rowPrepared="onRowPrepared"
+    >
+      <DxFilterRow
+        :visible="true"
+        apply-filter="{key: 'auto',name: 'Immediately'}"
+      />
+      <DxSearchPanel
+        :visible="true"
+        :width="240"
+        placeholder="Поиск..."
+      />
+
+      <DxColumn
+        type="buttons"
+        :buttons="editButtons" :width="65"
+      >
+      </DxColumn>
+      <DxColumn
+        data-field="id"
+        caption="ID" :width="65"
+      />
+      <DxColumn
+        data-field="displayName"
+        caption="Имя на экране"
+      />
+      <DxColumn
+        data-field="name"
+        caption="Имя в БД"
+      />
+      <DxColumn
+        data-field="order"
+        caption="Позиция" :width="90"
+      />
+      <DxColumn
+        data-field="maxLength"
+        caption="Длина поля" :width="90"
+      />
+      <DxColumn
+        data-field="typeControl"
+        caption="Тип редактора">
+        <DxLookup
+          :data-source="typeControl"
+          value-expr="id"
+          display-expr="caption"
+        />
+      </DxColumn>
+      <DxColumn
+        data-field="defaultTypeAccec"
+        caption="Доступ">
+        <DxLookup
+          :data-source="typeAccec"
+          value-expr="id"
+          display-expr="caption"
+        />
+      </DxColumn>
+      <DxColumn
+        data-field="typeProfileForm"
+        caption="Обязательность">
+        <DxLookup
+          :data-source="typeProfileForm"
+          value-expr="id"
+          display-expr="caption"
+        />
+      </DxColumn>
+
+      <DxColumn
+        data-field="isKey"
+        caption="Признак ключа" :width="120"
+      />
+      <DxColumn
+        data-field="isDeleted"
+        caption="Удален" :width="100"
+      />
+      <DxColumn
+        data-field="isNotVisible"
+        caption="Не показывать на экране" :width="100"
+      />
+
+    </DxTreeList>
+  </div>
+
+  <DxPopup id="fieldComponent"
+           width="80%"
+           height="80%"
+           :show-title="true"
+           :title.sync="captionEditFormModel"
+           :drag-enabled="false"
+           :close-on-outside-click="true"
+           :visible.sync="isVisibleEditFormModel"
+  >
+    <div class="popup-property-details">
+      <DxForm
+        ref="fieldEditorModel"
+        :form-data="fieldModelData"
+        :read-only="false"
+        :show-validation-summary="true"
+        validation-group="FieldModelEditor"
+        :show-colon-after-label="true"
+      >
+        <DxTabbedItem>
+          <DxTab title="Основная информация">
+            <DxGroupItem caption="Общие свойства" colCount="2">
+              <DxSimpleItem data-field="isKey" editor-type="dxCheckBox">
+                <DxLabel text="Признак ключа"/>
+              </DxSimpleItem>
+              <DxSimpleItem data-field="name">
+                <DxRequiredRule message="Поле обязательно для заполнения"/>
+                <DxLabel text="Имя в БД"/>
+              </DxSimpleItem>
+              <DxSimpleItem data-field="displayName">
+                <DxLabel text="Имя на экране"/>
+              </DxSimpleItem>
+              <DxSimpleItem data-field="tableName">
+                <DxLabel text="Таблица(не заполнять если основная)"/>
+              </DxSimpleItem>
+              <DxSimpleItem data-field="maxLength" editorType="dxNumberBox">
+                <DxRequiredRule message="Поле обязательно для заполнения"/>
+                <DxLabel text="Длина поля (для строковых данных)"/>
+              </DxSimpleItem>
+              <DxSimpleItem data-field="typeGroup" editorType="dxSelectBox" :editorOptions="typeGroupOptions">
+                <DxRequiredRule message="Поле обязательно для заполнения"/>
+                <DxLabel text="Тип группы"/>
+              </DxSimpleItem>
+              <DxSimpleItem data-field="isVirtual" editor-type="dxCheckBox">
+                <DxLabel text="Виртуальное поле"/>
+              </DxSimpleItem>
+            </DxGroupItem>
+            <DxGroupItem caption="Расширенные свойства" colCount="2">
+              <DxSimpleItem data-field="typeControl" editorType="dxSelectBox" :editorOptions="typeControlOptions">
+                <DxRequiredRule message="Поле обязательно для заполнения"/>
+                <DxLabel text="Тип редактора данных"/>
+              </DxSimpleItem>
+              <DxSimpleItem data-field="parentId" editorType="dxSelectBox" :editorOptions="parentGroupOptions">
+                <DxLabel text="Ссылка на группу"/>
+              </DxSimpleItem>
+              <DxSimpleItem data-field="formModelDetailId" editorType="dxSelectBox"
+                            :editorOptions="fieldModelByDetailOptions">
+                <DxLabel text="Компонент детальных строк"/>
+              </DxSimpleItem>
+              <DxSimpleItem data-field="isDeleted" editor-type="dxCheckBox">
+                <DxLabel text="Удален"/>
+              </DxSimpleItem>
+            </DxGroupItem>
+          </DxTab>
+          <DxTab title="Информация для формы списка">
+            <DxSimpleItem data-field="isVisibleList" editor-type="dxCheckBox">
+              <DxLabel text="Используется для таблицы"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="order" editorType="dxNumberBox">
+              <DxRequiredRule message="Поле обязательно для заполнения"/>
+              <DxLabel text="Позиция"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="widthList" editor-type="dxNumberBox">
+              <DxLabel text="Ширина колонки в %"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="sorting" editorType="dxNumberBox">
+              <DxLabel text="Очередность сортировки"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="express">
+              <DxLabel text="Выражение"/>
+            </DxSimpleItem>
+          </DxTab>
+          <DxTab title="Информация для формы редактирования">
+            <DxSimpleItem data-field="isDetail" editor-type="dxCheckBox">
+              <DxLabel text="Использовать для редактирования"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="orderDetail" editorType="dxNumberBox">
+              <DxRequiredRule message="Поле обязательно для заполнения"/>
+              <DxLabel text="Позиция при редактировании"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="groupCol" editorType="dxNumberBox">
+              <DxLabel text="Количество колонок в группе"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="mask">
+              <DxLabel text="Маска для редактирования"/>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="valueListBox">
+              <DxLabel text="Данные выпадающего списка"/>
+            </DxSimpleItem>
+          </DxTab>
+        </DxTabbedItem>
+        <DxEmptyItem/>
+      </DxForm>
+      <div
+        style="position:absolute;float:right; bottom:0px;right:0px;padding: 10px;">
+        <DxButton
+          icon="save"
+          type="success"
+          text="Сохранить"
+          v-on:click="saveModel"
+          validation-group="FieldModelEditor"
+          horizontal-alignment="right"
+        />
+        <DxButton
+          icon="close"
+          type="normal"
+          text="Выход"
+          horizontal-alignment="right"
+          @click="closeFormEditor()"
+        />
+      </div>
+    </div>
+  </DxPopup>
+
+  <DxLoadPanel
+    :visible.sync="loadingVisible"
+    :show-indicator="true"
+    :show-pane="true"
+    :shading="true"
+    :close-on-outside-click="false"
+    shading-color="rgba(0,0,0,0.4)"
+  />
+</div>

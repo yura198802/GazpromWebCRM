@@ -1,0 +1,41 @@
+
+
+<div id="forms_div"  >
+    <span >Выбор полей.</span>
+    <DxToolbar id="tbar"  >
+      <DxItem :options="acceptOptions" :visible = "true" location="before" widget="dxButton"  :disabled.sync="acceptDisabled"/>
+    </DxToolbar>
+  <DxTreeList  
+  id="forms_grid" ref="treeForms"
+  :show-borders="true"
+              :visible= "isShow"
+              :data-source="this.fields"
+              :column-max-width="300"
+              :column-min-width="100"
+              :show-row-lines="false"
+              key-expr="id"              
+              :height = "height"
+              parent-id-expr="parentId"
+              data-structure="plain"
+              :allow-column-resizing="true"
+              column-resizing-mode="widget"
+              :column-auto-width="true"
+              :focused-row-enabled="true"
+              >
+    <DxSearchPanel :visible="false" :width="250" />
+    <DxHeaderFilter :visible="false" />
+    <DxSelection mode="single" />
+    <DxColumnChooser :enabled="false" />
+    <DxEditing :allow-updating="true" mode="cell" />
+    <DxColumn data-field="text" caption="Наименование поля"  :allow-editing="false"></DxColumn>
+    <DxColumn data-field="typeAccess"  caption="Доступ" >
+      <DxLookup
+        :data-source="access"
+        value-expr="id"
+        display-expr="value"
+      />
+    </DxColumn>
+  </DxTreeList>
+
+</div>
+<!--:selected-row-keys.sync="selectedRowKeys"-->

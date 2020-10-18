@@ -1,0 +1,164 @@
+  <div style="padding: 10px;">
+  <div id="dataGrid">
+    <DxDataGrid 
+    :data-source="models"
+    :remote-operations="false"
+    :allow-column-reordering="true"
+    :row-alternation-enabled="true"
+    :allow-column-resizing="true"
+    :focused-row-enabled="true"
+    :show-borders="true"
+    keyExpr="id"
+    @toolbar-preparing="onToolbarPreparing($event)"
+    @focused-row-changed="onFocusedRowChanged"
+  >
+    <DxFilterRow
+        :visible="true"
+        apply-filter="{key: 'auto',name: 'Immediately'}"
+      />
+      <DxSearchPanel
+        :visible="true"
+        :width="240"
+        placeholder="Поиск..."
+      />
+      
+      <DxColumn 
+      type="buttons"
+      :buttons="editButtons" :width="65"
+      >
+      </DxColumn>  
+    <DxColumn
+      data-field="id"
+      caption="ID" :width="65"
+    />
+    <DxColumn
+      data-field="displayName"
+      caption="Имя на экране"
+    />
+    <DxColumn
+      data-field="sysName"
+      caption="Системное имя"
+    />
+    <DxColumn
+      data-field="toolTip"
+      caption="Подсказка"
+    />
+    <DxColumn
+      data-field="width"
+      caption="Ширина"
+    />
+    <DxColumn
+      data-field="height"
+      caption="Высота"
+    />
+    <DxColumn
+      data-field="order"
+      caption="Позиция"
+    />   
+    <DxColumn
+      data-field="iconName"
+      caption="Имя картинки"
+    />   
+    <DxColumn
+      data-field="isDeleted"
+      caption="Удален" :width="100"
+    />
+  </DxDataGrid>
+</div>
+  
+  <DxPopup 
+      :width="660"
+      :height="700"
+      :show-title="true"
+      :title.sync="captionEditFormModel"
+      :drag-enabled="false"
+      :close-on-outside-click="true"
+      :visible.sync="isVisibleEditFormModel"
+    >
+      <div class="popup-property-details">
+        <DxForm
+        ref="buttonEditorModel"
+        :form-data="buttonModelData"
+        :read-only="false"
+        :show-validation-summary="true"
+        validation-group="ButtonModelEditor"
+        :show-colon-after-label="true"
+        >
+        <DxSimpleItem data-field="displayName">
+          <DxLabel text="Имя на экране"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="sysName">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Системное имя"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="toolTip">
+          <DxLabel text="Подсказка"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="width" editorType="dxNumberBox">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Ширина"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="height" editorType="dxNumberBox">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Высота"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="order" editorType="dxNumberBox">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Позиция"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="isDeleted" editor-type="dxCheckBox">
+          <DxLabel text="Удален"/>
+        </DxSimpleItem>  
+        <DxSimpleItem data-field="iconName">
+          <DxLabel text="Имя картинки"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="isDetail" editor-type="dxCheckBox">
+          <DxLabel text="Только для редактирования"/>
+        </DxSimpleItem> 
+        <DxSimpleItem data-field="typeBtn" editorType="dxSelectBox" :editorOptions="typeBtnOptions">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Тип кнопки"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="stylingMode" editorType="dxSelectBox" :editorOptions="typeStyleModeOptions">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Тип контейнера"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="location" editorType="dxSelectBox" :editorOptions="typeLocationOptions">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Позиция кнопки"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="validationGroup">
+          <DxLabel text="Контейнер проверки"/>
+        </DxSimpleItem>
+        <DxEmptyItem />
+        </DxForm>
+        <div 
+            style="position:absolute;float:right; bottom:0px;right:0px;padding: 10px;">
+          <DxButton
+          icon="save"
+          type="success"
+          text="Сохранить"
+          v-on:click="saveModel"
+          validation-group="ButtonModelEditor"
+          horizontal-alignment="right"
+        />        
+        <DxButton
+          icon="close"
+          type="normal"
+          text="Выход"
+          horizontal-alignment="right"
+          @click="closeFormEditor()"
+        />
+        </div>
+      </div>     
+  </DxPopup>
+
+  <DxLoadPanel
+      :visible.sync="loadingVisible"
+      :show-indicator="true"
+      :show-pane="true"
+      :shading="true"
+      :close-on-outside-click="false"
+      shading-color="rgba(0,0,0,0.4)"
+    />
+</div>

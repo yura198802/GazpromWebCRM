@@ -1,0 +1,40 @@
+<div  style="height: 100%; width:30%;">
+  <div style="height: 100%; ">
+          <DxDataGrid :style="{padding: '3px',width:'100%', height: '100%'}"
+                      :data-source="models"
+                      id="gridContainer"
+                      :remote-operations="false"
+                      :allow-column-reordering="true"
+                      :row-alternation-enabled="true"
+                      :allow-column-resizing="true"
+                      :focused-row-enabled="true"
+                      :focused-row-key.sync="focusedRowKey"
+                      :show-borders="true"
+                      keyExpr="id"
+                      ref="dataGrid"
+                      :loadPanel="loadPanel"
+          >
+            <DxSearchPanel
+              :visible="true"
+              width="240"
+              placeholder="Поиск..."
+            />
+            <DxPaging :page-size="25" :enabled="true"/>
+            <DxPager
+              :show-page-size-selector="true"
+              :allowed-page-sizes="pageSizes"
+              :show-info="true"
+              :visible="true"
+            />
+
+            <DxColumn
+              data-field="name"
+              caption="Наименование"
+            >
+            </DxColumn>
+          </DxDataGrid>
+
+  </div>
+
+
+</div>

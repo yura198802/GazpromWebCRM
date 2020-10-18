@@ -1,0 +1,34 @@
+<div class="diag">
+  <DxToolbar id="tbar"  >
+    <DxItem :options="options" :visible = "true" location="before" widget="dxButton"  />
+  </DxToolbar>
+  <div v-bind:style="stylePie">
+    <DxPieChart id="pie" :data-source="purchases" palette="Bright" title="Покупки за месяц">
+      <DxSeries argument-field="arg" value-field="val">
+        <DxLabel :visible="true">
+          <DxConnector :visible="true" :width="1" />
+        </DxLabel>
+      </DxSeries>
+      <DxSize :width="1200" />
+      <DxExport :enabled="false" />
+    </DxPieChart>
+  </div>
+  <div v-bind:style="styleObject">
+    <DxChart id="chart" :data-source="purchases" :rotated="true" title="Покупки за месяц">
+      <DxArgumentAxis :tick-interval="10">
+        <DxLabel :customize-text="customizeLabelText" />
+      </DxArgumentAxis>
+      <DxSeriesTemplate
+      name-field="arg" type="bar"
+    />
+      <DxCommonSeriesSettings argument-field="arg" value-field="val"  type="bar" >
+      <DxLabel :visible="true">
+        <DxConnector :visible="true" :width="1" />
+      </DxLabel>
+    </DxCommonSeriesSettings>
+      <DxSize :width="1200" />
+      <DxLegend   vertical-alignment="bottom"
+      horizontal-alignment="center" :visible="true" />
+    </DxChart>
+  </div>
+</div>

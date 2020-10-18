@@ -1,0 +1,11 @@
+<div>
+  <DxToolbar class="tbar" :visible.sync="this.visibleToolbar">
+    <DxItem class="btns" :options="createButtonOptions" :visible = "this.visibleCreate" location="before"  widget="dxButton"  :disabled="createDisabled"/>
+    <DxItem class="btns" :options="refreshButtonOptions" :visible = "this.visibleRefresh" location="before" widget="dxButton" :disabled="disableBtn" />
+    <DxItem class="btns" :options="addButtonOptions" :visible = "this.visibleAdd" location="before"  widget="dxButton"  :disabled="addDisabled"/>
+    <DxItem class="btns" :options="editButtonOptions" :visible = "this.visibleEdit" location="before"  widget="dxButton" :disabled="editDisabled" />
+    <DxItem class="btns" :options="removeButtonOptions" :visible = "this.visibleRemove" location="before" widget="dxButton"  :disabled="removeDisabled"/>
+    <DxItem class="btns" :options="acceptOptions" :visible = "this.visibleAccept" location="before" widget="dxButton"  :disabled="acceptDisabled"/>
+  </DxToolbar>
+</div>
+<!--locate-in-menu="auto"-->

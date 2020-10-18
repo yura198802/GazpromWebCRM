@@ -1,0 +1,25 @@
+<div class="">
+  <div>
+    <table>
+      <tr v-for="item in users">
+        <td>{{item.id}}</td>
+        <td>{{item.account}}</td>
+        <td>{{item.fullName}}</td>
+        <td>{{item.shortName}}</td>
+        <td>{{item.email}}</td>
+        <td>{{item.phone}}</td>
+        <td>{{item.typeUser}}</td>
+        <td>{{item.managerId}}</td>
+        <td>{{item.manager}}</td>
+        <td><span v-on:click="deleteUser(item.account)">delete</span></td>
+      </tr>
+    </table>
+    <pre>
+      {{users}}
+      {{roles}}
+      {{profile}}
+      {{user}}
+
+    </pre>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+  <DxPopup :visible.sync="this.show" :show-title=true :title.sync="this.getTitle" :show-close-button=false
+    :drag-enabled="false" :close-on-outside-click="false" :shading="true" width="600" heigth="200">
+    <div id="editor">
+      <DxDataGrid :data-source="users" ref="usersGrid" :show-borders="true" key-expr="id"
+        :visible.sync="this.show" :selection="{ mode: 'multiple' }" @focused-row-changed="selectionChanged" @selection-changed ="onSelectionChanged"
+        :focused-row-enabled="true">
+        <DxColumn data-field="fullName" caption="Пользователь"></DxColumn>
+      </DxDataGrid>
+     <div>
+        <accept-tbar 
+          :visible-toolbar.sync="this.show" 
+          :visible-close.sync="this.show"
+          :visible-save.sync="this.show"
+          :text-save = "this.textSave"
+          :save="saveBtnClick" 
+          :close="closeBtnClick" />
+      </div>
+    </div>
+  </DxPopup>
+  <!--           -->

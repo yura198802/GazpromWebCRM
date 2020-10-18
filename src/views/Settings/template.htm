@@ -1,0 +1,52 @@
+
+  <div id="back" >
+    <div id=static >
+      <div>
+      <splitpanes class="default-theme" style="background-color:#f2f2f2;height: 50%;width:100%;">
+        <pane style="background-color:#f2f2f2;" min-size="40" max-size="60" >
+      <Orgs class="components" @click:org="OnClickOrg" @action:org="onActionOrg" ref="orgsGrid" />
+    </pane>
+    <pane >
+      <Roles class="components" @click:role="OnClickRole" @action:role="onActionRole" :org.sync="org" ref="rolesGrid" />
+    </pane>
+    </splitpanes>
+  </div>
+<!--  <div id="org_info" style="background-color:f2f2f2;height: 20%;width:100%;" >
+
+    <div id = "caption">
+      <label >Наименование: {{org.caption}}</label>
+    </div>
+    <div id ="detalis">
+      <label >ИНН: {{org.inn}}</label>
+      <label >КПП: {{org.kpp}}</label>
+      <label >ОКТМО: {{org.oktmo}}</label>
+    </div>    
+  </div>-->
+    </div>
+    <DxTabPanel ref="contentR" id="content" class="default-theme" style="padding: 10px;"
+      :show-nav-buttons="true" :height="height" :selected-index.sync="selectedIndex" :repaint-changes-only="true"
+      :animation-enabled="true" :defer-rendering="false" @title-click="titleClick">
+      <DxItem title="Настройка пользователей">
+        <template #default>
+          <Users ref="users" :is-show="true" :data-template.sync="usersData" />
+        </template>
+      </DxItem>
+      <DxItem title="Настройка кнопок" class="item">
+        <template #default>
+          <Buttons ref="btns" :is-show="true" data-template="this.role" />
+        </template>
+      </DxItem>
+      <DxItem title="Настройка форм" class="item">
+        <template #default>
+          <Forms ref="forms" :is-show="true" data-template.sync="this.role" />
+        </template>
+      </DxItem>
+      <DxItem title="Настройка полей" class="item">
+        <template #default>
+          <Fields ref="fields" :is-show="true" data-template.sync="this.role" />
+        </template>
+      </DxItem>
+    </DxTabPanel>
+  </div>
+  <!--<div class="admpage" >
+</div>-->

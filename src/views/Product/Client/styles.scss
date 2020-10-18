@@ -1,0 +1,15 @@
+.horizontal-panes {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+}
+.horizontal-panes > .pane {
+  text-align: left;
+  padding: 1px;
+  overflow: hidden;
+  background: #eee;
+}
+.horizontal-panes > .pane ~ .pane {
+  border-top: 1px solid #ccc;
+}
+

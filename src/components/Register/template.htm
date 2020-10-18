@@ -1,0 +1,51 @@
+<div class="auth">
+  <div class="title">Login</div>
+  <div class="description">Пожалуйста, введите ваши учётные данные Monica</div>
+  <div class="line"></div>
+  <form v-on:submit.prevent="register">
+    <div class="row">
+      <div class="col col-left">
+        <div class="input-group">
+          <input id="email" name="email" type="text" class="input" v-model="email" autocomplete="off">
+          <label for="email" :class="(email && email !='') ? 'active' : '' ">E-mail</label>
+        </div>
+        <div class="input-group">
+          <input id="login" name="login" type="text" class="input" v-model="login" autocomplete="off">
+          <label for="login" :class="(login && login !='') ? 'active' : '' ">Логин</label>
+        </div>
+        <div class="input-group">
+          <input id="password" name="password" type="password" class="input" v-model="password" autocomplete="off">
+          <label for="password" :class="(password && password !='') ? 'active' : '' ">Пароль</label>
+        </div>
+        <div class="input-group">
+          <input id="repass" name="repass" type="password" class="input" v-model="repass" autocomplete="off">
+          <label for="repass" :class="(repass && repass !='') ? 'active' : '' ">Повторите пароль</label>
+        </div>
+      </div>
+      <div class="col col-right">
+        <div class="input-group">
+          <input id="phone" name="phone" type="text" class="input" v-model="phone" autocomplete="off">
+          <label for="phone" :class="(phone && phone !='') ? 'active' : '' ">Номер телефона</label>
+        </div>
+        <div class="input-group">
+          <input id="lname" name="lname" type="text" class="input" v-model="lname" autocomplete="off">
+          <label for="lname" :class="(lname && lname !='') ? 'active' : '' ">Фамилия</label>
+        </div>
+        <div class="input-group">
+          <input id="fname" name="fname" type="text" class="input" v-model="fname" autocomplete="off">
+          <label for="fname" :class="(fname && fname !='') ? 'active' : '' ">Имя</label>
+        </div>
+        <div class="input-group">
+          <input id="pname" name="pname" type="text" class="input" v-model="pname" autocomplete="off">
+          <label for="pname" :class="(pname && pname !='') ? 'active' : '' ">Отчество</label>
+        </div>
+      </div>
+    </div>
+    <div >
+      
+    </div>
+    <button class="button" type="submit">
+      Login
+    </button>
+  </form>
+</div>

@@ -1,0 +1,66 @@
+<div id="f_div" v-bind:style="{visibility: isVisible}" >
+    <div class="long-title" >
+        <h3 >{{text}}</h3>
+    </div>
+    <div id ="form_div">
+        <DxForm :visible="true" :form-data="user" :scrolling-enabled="true" :col-count="2" @content-ready="contentReady">
+            <DxScrollView :scroll-by-content="true" :scroll-by-thumb="true" />    
+            <DxGroupItem caption="Информация пользователя">
+                <DxSimpleItem data-field="surname">
+                    <DxRequiredRule message="Поле обязательно для заполнения" />
+                    <DxLabel text="Фамилия" />
+                </DxValidator>
+                </DxSimpleItem>
+                <DxSimpleItem data-field="name">
+                    <DxLabel text="Имя" />
+                </DxSimpleItem>
+                <DxSimpleItem data-field="middlename">
+                    <DxLabel text="Отчество" />
+                </DxSimpleItem>
+            </DxGroupItem>
+            <DxTabbedItem :col-span="1">
+                <DxTab title="Авторизация">
+                    <DxSimpleItem data-field="account"  :editor-options="{disabled:visibleLogin}">
+                        <DxRequiredRule message="Поле обязательно для заполнения" />
+                        <DxLabel text="Логин" />
+                        </DxValidator>
+                    </DxSimpleItem>
+
+                    <DxSimpleItem data-field="password" :visible = "!visibleLogin">
+                        <DxRequiredRule message="Поле обязательно для заполнения" />
+                        <DxLabel text="Пароль" />
+                    </DxValidator>
+                </DxSimpleItem>
+                    <DxSimpleItem data-field="confirmPassword" :visible = "!visibleLogin">
+                        <DxRequiredRule message="Поле обязательно для заполнения" />
+                        <DxLabel text="Подтверждение пароля" />
+                    </DxValidator>
+                    </DxSimpleItem>
+
+                    <DxSimpleItem data-field="password" :visible = "visibleLogin">
+                        <DxLabel text="Пароль" />
+                    </DxSimpleItem>
+                    <DxSimpleItem data-field="confirmPassword" :visible = "visibleLogin">
+                        <DxLabel text="Подтверждение пароля" />
+                    </DxSimpleItem>
+                </DxTab>
+                <DxTab title="Контакты">
+                    <DxSimpleItem data-field="phone">
+                        <DxLabel text="Номер телефона" />
+                    </DxSimpleItem>
+                    <DxSimpleItem data-field="email">
+                        <DxLabel text="Эл.почта" />
+                    </DxSimpleItem>
+                </DxTab>
+            </DxTabbedItem>
+        </DxForm>
+    </div>    
+    <div id ="accept_div">
+        <DxButton ... text="Сохранить" hint="Сохранить" type="success" icon="todo" styling-mode="contained"
+        @click="acceptClick()">
+      </DxButton>
+      <DxButton ... text="Отмена" hint="Отмена" type="danger" icon="close" styling-mode="contained"
+      @click="cancelClick()">
+    </DxButton>
+    </div>
+</div>

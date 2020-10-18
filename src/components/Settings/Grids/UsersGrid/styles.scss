@@ -1,0 +1,35 @@
+#users_div { 
+    box-sizing : border-box;
+    padding: 10px;
+    vertical-align: middle;
+ }
+ .btns_div{
+    Justify-content:flex-start;
+    min-height: 1.5cm;
+    padding-bottom: 1px;
+    align-items:center;
+ }
+ #manage_div{
+    //box-sizing : border-box;
+    display:flex;
+    Justify-content:flex-start;
+    align-items:center;
+ }
+ #panel_div{
+    height: calc(70vh - 30px);
+    width: 75%;
+    display:flex;
+    flex-direction: column;
+    margin: 0px 0px 0px 5%;
+ }
+ #free_div{
+    height: calc(70vh - 30px);
+    max-width: 20%;
+ }
+ #free_grid{
+     height: calc(70vh - 30px);
+     max-width: 100%;
+ }
+ .bounce-enter-active {
+   animation: bounce-in .5s;
+ }

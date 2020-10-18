@@ -1,0 +1,149 @@
+<div>
+  <div>
+    <DxToolbar :items="toolbarContent"/>
+    <DxDrawer style="padding: 10px;"
+              :opened-state-mode="selectedOpenMode"
+              :opened.sync="openState"
+              :close-on-outside-click="true"
+              template="listMenu"
+              :closeOnOutsideClick="false"
+    >
+      <template #listMenu>
+        <div style="width:400;">
+          <DxTreeList
+            id="treeview"
+            :width="400"
+            :height="heightTree"
+            :show-row-lines="false"
+            :focusedRowEnabled="true"
+            key-expr="id"
+            :data-source="models"
+            v-on:focusedRowChanged="onSelectFormByTreeList">
+            <DxSearchPanel :visible="true" :width="400" placeholder="Поиск..."/>
+            <DxColumn
+              :width="50"
+              data-field="text"
+              caption="Наименование режима"
+            >
+            </DxColumn>
+          </DxTreeList>
+        </div>
+      </template>
+      <DxTabPanel id="content" class="dx-theme-background-color" style="padding: 10px;"
+                  :show-nav-buttons="true"
+                  :repaint-changes-only="true"
+                  :animation-enabled="true"
+                  :height="heightTree"
+                  :defer-rendering="false">
+
+        <DxItem title="Поля модели">
+          <template #default>
+            <Field title="Поля модели" ref="fieldGrid" :template-data="selectedFormModel"/>
+          </template>
+        </DxItem>
+        <DxItem title="Действия (кнопки)" template="itemButton">
+          <template #default>
+            <Button title="Поля модели" ref="buttonGrid" :template-data="selectedFormModel"/>
+          </template>
+        </DxItem>
+        <DxItem title="Правила проверки" template="validateRule">
+          <template #default>
+            <ValidationRule title="Правила проверки" ref="validationRule" :template-data="selectedFormModel"/>
+          </template>
+        </DxItem>
+      </DxTabPanel>
+
+    </DxDrawer>
+
+
+  </div>
+
+  <DxPopup
+    :width="660"
+    :height="700"
+    :show-title="true"
+    :title.sync="captionEditFormModel"
+    :drag-enabled="false"
+    :close-on-outside-click="true"
+    :visible.sync="isVisibleEditFormModel"
+  >
+    <div class="popup-property-details">
+      <DxForm
+        ref="formEditorModel"
+        :form-data="formModelData"
+        :read-only="false"
+        :show-validation-summary="true"
+        validationGroup="FormModelEditor"
+        :show-colon-after-label="true"
+      >
+        <DxSimpleItem data-field="isNotVisible" editor-type="dxCheckBox">
+          <DxLabel text="Не отображать в меню"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="caption">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Название режима"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="tableName">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Название таблицы"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="order" editorType="dxNumberBox">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Позиция"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="typeFormId" editorType="dxSelectBox" :editorOptions="typeFormOptions">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Тип режима"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="typeEditor" editorType="dxSelectBox" :editorOptions="typeEditorOptions">
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+          <DxLabel text="Тип отображения"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="nameClassDataEngine">
+          <DxLabel text="Название режима по умолчанию"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="vueComponent">
+          <DxLabel text="Компонент для редактирования объекта"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="colCount" editorType="dxNumberBox">
+          <DxLabel text="Количество колонок для визуальных элементов"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="widthDetail" editorType="dxNumberBox">
+          <DxLabel text="Ширина для формы редактирования в %"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="heightDetail" editorType="dxNumberBox">
+          <DxLabel text="Высота для формы редактирования в %"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="vueComponent">
+          <DxLabel text="Отображаемый конент"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="isDeleted" editor-type="dxCheckBox">
+          <DxLabel text="Удален"/>
+        </DxSimpleItem>
+        <DxEmptyItem/>
+      </DxForm>
+      <div
+        style="position:absolute;float:right; bottom:0px;right:0px;padding: 10px;">
+        <DxButton
+          icon="save"
+          type="success"
+          text="Сохранить"
+          v-on:click="saveFormModel"
+          validationGroup="FormModelEditor"
+          horizontal-alignment="right"
+          vertical-alignment="Top"
+        />
+        <DxButton
+          icon="close"
+          type="normal"
+          text="Выход"
+          horizontal-alignment="right"
+          vertical-alignment="Top"
+          @click="exitFormModel()"
+
+        />
+      </div>
+    </div>
+  </DxPopup>
+
+</div>

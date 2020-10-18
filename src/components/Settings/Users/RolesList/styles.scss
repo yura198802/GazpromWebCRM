@@ -1,0 +1,53 @@
+#orgs.dx-treelist-rowsview td {
+    vertical-align: middle;
+}
+//#settings_div{
+//    background: blanchedalmond;
+//    float:left;
+//}
+.clr{
+    clear: both
+}
+/*#roles_id{
+    float:left;
+    margin: 20px;
+}*/
+/*#users_id{
+    float:left;
+    margin: 20px;
+}*/
+
+#roles{
+    overflow:auto; 
+}
+//.wrapper_lorg{
+//    border: 1px solid  black; /* Параметры границы */
+//    background: blanchedalmond; /* Цвет фона */
+//    padding: 1px; /* Поля вокруг текста */
+//    margin: 20px 20px 0px 20px;
+//    width: 70%;
+//}
+//.float_grid{
+//    float:left;
+//    margin: 20px;
+//    visibility: hidden;
+//    margin: 20px 20px 0px 20px;
+//}
+//.wrapper{
+ ///   display:flex;
+ //   justify-cosntent: space-between;
+ //   align-items:stretch;
+///}
+//#roles_id{
+//    height: 90%;
+ //   overflow:auto
+//}
+//#users_id{
+//    height: 90%;
+//    overflow:auto
+//}
+#role_grid {
+    min-height: calc(70vh - 10px) ;
+    max-height: calc(70vh - 10px);
+    vertical-align: middle;
+ }

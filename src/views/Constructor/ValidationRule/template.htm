@@ -1,0 +1,143 @@
+<div style="padding: 10px;">
+  <div id="dataGrid">
+    <DxTreeList style="padding: 3px;position:fixed; width:98%; height: 98%;"
+                :data-source="models"
+                :allow-column-reordering="true"
+                :show-row-lines="true"
+                :allow-column-resizing="true"
+                :focusedRowEnabled="true"
+                :show-borders="true"
+                keyExpr="id"
+                :wordWrapEnabled="true"
+                :autoExpandAll="true"
+                @toolbar-preparing="onToolbarPreparing($event)"
+                v-on:focusedRowChanged="onFocusedRowChanged"
+    >
+      <DxFilterRow
+        :visible="true"
+        apply-filter="{key: 'auto',name: 'Immediately'}"
+      />
+      <DxSearchPanel
+        :visible="true"
+        :width="240"
+        placeholder="Поиск..."
+      />
+
+      <DxColumn
+        type="buttons"
+        :buttons="editButtons" :width="65"
+      >
+      </DxColumn>
+      <DxColumn
+        data-field="id"
+        caption="ID" width="20%"
+      />
+      <DxColumn
+        width="20%"
+        data-field="name"
+        caption="Имя валидации"
+      >
+      </DxColumn>
+      <DxColumn
+        width="20%"
+        data-field="content"
+        caption="Объект правил валидации"
+      >
+      </DxColumn>
+      <DxColumn
+        width="20%"
+        data-field="toolTip"
+        caption="Пояснения к правилу валидации"
+      >
+      </DxColumn>
+      <DxColumn
+        caption="Тип валидации"
+        data-field="typeValidation"
+        width="20%">
+        <DxLookup
+          :data-source="typeValidation"
+          value-expr="id"
+          display-expr="caption"
+        />
+      </DxColumn>
+      <DxColumn
+        width="20%"
+        data-field="typeReturnValidation"
+        caption="Возвращаемое значение">
+        <DxLookup
+          :data-source="typeReturnValidation"
+          value-expr="id"
+          display-expr="caption"
+        />
+      </DxColumn>
+    </DxTreeList>
+  </div>
+
+  <DxPopup id="fieldComponent"
+           width="70%"
+           height="50%"
+           :show-title="true"
+           :title.sync="captionEditFormModel"
+           :drag-enabled="false"
+           :close-on-outside-click="true"
+           :visible.sync="isVisibleEditFormModel"
+  >
+    <div class="popup-property-details">
+      <DxForm
+        ref="fieldEditorModel"
+        :form-data="fieldModelData"
+        :read-only="false"
+        :show-validation-summary="true"
+        validation-group="FieldModelEditor"
+        :show-colon-after-label="true"
+      >
+        <DxSimpleItem data-field="name">
+          <DxLabel text="Имя валидации"/>
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="content" editorType="dxTextArea">
+          <DxLabel text="Объект правил валидации"/>
+          <DxRequiredRule message="Поле обязательно для заполнения"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="toolTip" editorType="dxTextArea">
+          <DxLabel text="Пояснения к правилу валидации"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="typeValidation" editorType="dxSelectBox" :editorOptions="typeValidationOptions">
+          <DxLabel text="Тип валидации"/>
+        </DxSimpleItem>
+        <DxSimpleItem data-field="typeReturnValidation" editorType="dxSelectBox"
+                      :editorOptions="typeReturnValidationOptions">
+          <DxLabel text="Возвращаемое значение"/>
+        </DxSimpleItem>
+        <DxEmptyItem/>
+      </DxForm>
+      <div
+        style="position:absolute;float:right; bottom:0px;right:0px;padding: 10px;">
+        <DxButton
+          icon="save"
+          type="success"
+          text="Сохранить"
+          v-on:click="saveModel"
+          validation-group="FieldModelEditor"
+          horizontal-alignment="right"
+        />
+        <DxButton
+          icon="close"
+          type="normal"
+          text="Выход"
+          horizontal-alignment="right"
+          @click="closeFormEditor()"
+        />
+      </div>
+    </div>
+  </DxPopup>
+
+  <DxLoadPanel
+    :visible.sync="loadingVisible"
+    :show-indicator="true"
+    :show-pane="true"
+    :shading="true"
+    :close-on-outside-click="false"
+    shading-color="rgba(0,0,0,0.4)"
+  />
+</div>

@@ -1,0 +1,82 @@
+<div class="main">
+  <div class="container">
+    <div id="fileuploader" class="fileuploader-container">
+      <DxFileUploader select-button-text="Выбрать файл" label-text=" или перетащите сюда файл мышью" :accept="accept"
+        upload-mode="useForm" :max-file-size="500000" invalidMaxFileSizeMessage="Файл слишком длинный!"
+        readyToUploadMessage="" @value-changed="e => handleFileUpload(e)" } />
+    </div>
+    
+    <DxLoadPanel
+    :position="loadingPosition"
+    :hoverStateEnabled="true"
+    showFileList=false
+    allowCanceling=true
+    :visible.sync="loadingVisible"
+    :show-indicator=true
+    :show-pane=false
+    :shading=true
+    :close-on-outside-click=false
+    shading-color="rgba(0,0,0,0.4)"
+    />
+
+    <div id="preview" class="preview-container">
+        <div class="previewinfo">
+          <div v-for="(info, index) in infoPreview" :key="index" class="selected-item">       
+            <div v-html="info"></div>
+          </div>
+        </div>
+
+        <div class="previewerrors">
+          <!-- <h4>Ошибки</h4> -->
+          <div
+            v-for="(error, index) in errorsPreview"
+            :key="index"
+            class="selected-item"
+          >
+          <span><b>{{(error.code=="1111" ? "Стек" : "Ошибка" )}}: </b></span>
+          <span>{{error.description}}<br></span>
+          </div>
+        </div>      
+    </div>
+
+    <div id="import"  class="import-container">
+      <DxButton :disabled='isDisabledImport' class="button" text="Импортировать" type="success" @click="importFile" />
+      <div class="importinfo">
+        <div v-for="(info, index) in infoImport" :key="index" class="selected-item">
+          <div v-html="info"></div>
+        </div>
+      </div>
+      <div class="importerrors">
+        <!-- <h4>Ошибки</h4> -->
+        <div
+          v-for="(error, index) in errorsImport"
+          :key="index"
+          class="selected-item"
+        >          
+          <span><b>{{(error.code=="1111" ? "Стек" : "Ошибка" )}}: </b></span>
+          <span>{{error.description}}<br></span>
+        </div>
+      </div>      
+
+    </div>
+  </div>
+
+
+  <div class="options">
+    <div class="caption">Параметры загрузки</div>
+    <div class="option">
+      <span>Тип формата файла</span>
+      <DxSelectBox :data-source="fileTypesSource" value-expr="value" display-expr="name" value="*.*"
+        @value-changed="e => accept = e.value" />
+    </div>
+
+    <div class="option">
+      <div class="label">Сдвиг по дате</div>
+      <div class="value">
+        <DxNumberBox v-model.number="daysshiftmodel" :show-spin-buttons="true" :max="5" :min="0" format="#0 (дни)"
+          @value-changed="e => daysShift = e.value" />
+      </div>
+    </div>
+
+  </div>
+</div>

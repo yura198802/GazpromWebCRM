@@ -1,0 +1,76 @@
+<div id="wrap">
+  <div id="lorg_tbar">
+    <TopToolBar :visible-toolbar="true" @add:click="addClick" @refresh:click="refreshClick" @remove:click="removeClick"
+      @edit:click="editClick" :add-disabled.sync="aDisabled" :remove-disabled.sync="rDisabled" :visible-refresh="true"
+      :visible-remove="true" :visible-edit="true" :visible-add="true" />
+  </div>
+  <div id="levelorg_list">
+    <span>Выбор организации</span>
+    <DxTreeList id="org_grid" :ref="treeLevelOrgs" :visible=true :column-max-width="300" :column-min-width="100"
+      :data-source="this.orgs" :show-row-lines="true" key-expr="id" parent-id-expr="parent"
+      :allow-column-resizing="true" column-resizing-mode="widget" :column-auto-width="true"
+      @row-dbl-click="doubleClickOrg" @content-ready="onReady" :expanded-row-keys.sync="expandedRowKeys"
+      :focused-row-enabled="true" :focused-row-key.sync="focusedRowKey" @focused-row-changed="onFocusedRowChanged"
+      :show-borders="true">
+      <DxEditing :allow-updating="false :start-edit-action=" startEditAction" mode="cell"></DxEditing>
+      <DxSearchPanel :visible="false" :width="250" />
+      <DxHeaderFilter :visible="false" />
+      <DxSelection mode="single" />
+      <DxColumnChooser :enabled="false" />
+      <!-- <DxColumn class = "columns" type="buttons" :buttons="editButtons"   :visible ="this.canEdit"/>-->
+      <DxColumn data-field="caption" caption="Наименование" />
+      <DxColumn :visible="false" :min-width="100" data-field="typeLevel" caption="Тип уровня">
+        <DxLookup :visible="false" :data-source="types" value-expr="id" display-expr="caption" />
+      </DxColumn>
+     <!-- <DxColumn :visible="false" :min="100" data-field="inn" caption="ИНН" />
+      <DxColumn :visible="false" :min="100" data-field="kpp" caption="КПП" :allow-column-resizing="true" />
+      <DxColumn :visible="false" :min="100" data-field="oktmo" caption="ОКТМО" :allow-column-resizing="true" />-->
+    </DxTreeList>
+  </div>
+  <div>
+    <DxPopup :visible.sync="editorShow" :show-title=true :show-close-button=false :drag-enabled="false"
+      :close-on-outside-click="false" :width="500" :height="250" :shading="true" :title="editorCaptionComputed">
+      <div id="editor">
+        <DxForm id="editorForm" :form-data="org" :visible.sync="editorShow" :read-only="false" ref="editorGrid">
+          <DxSimpleItem data-field="caption" caption="Наименование">
+            <DxRequiredRule message="Поле обязательно для заполнения" />
+            <DxLabel text="Наименование" />
+            </DxValidator>
+          </DxSimpleItem>
+          <!--<DxSimpleItem data-field="typeControl" editorType="dxSelectBox" :editorOptions="typeControlOptions"></DxSimpleItem>-->
+          <DxSimpleItem data-field="typeLevel" editorType="dxSelectBox" :editorOptions="typeLevelOptions">
+            <DxLabel text="Тип уровня организации" />
+          </DxSimpleItem>
+<!--          <DxGroupItem caption="Реквизиты" :col-count="colCount">
+            <DxSimpleItem data-field="inn" :width="100">
+              <DxLabel ref="innref" text="ИНН" />
+              <DxRequiredRule message="Поле обязательно для заполнения" />
+              <DxPatternRule :pattern="innPattern" message="Проверьте количество введённых цифр!" />
+              </DxValidator>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="kpp" :width="100">
+              <DxLabel text="КПП" />
+              <DxRequiredRule message="Поле обязательно для заполнения" />
+              <DxPatternRule :pattern="kppPattern" message="Проверьте количество введённых цифр!" />
+              </DxValidator>
+            </DxSimpleItem>
+            <DxSimpleItem data-field="oktmo" :width="100">
+              <DxLabel text="ОКТМО" />
+              <DxPatternRule :pattern="oktmoPattern" message="Проверьте количество цифр!" />
+              </DxValidator>
+            </DxSimpleItem>
+          </DxGroupItem>-->
+        </DxForm>
+        <AcceptTbar :visible-toolbar.sync="editorShow" :visible-close.sync="editorShow" :visible-save.sync="editorShow"
+          :save="saveBtnClick" :close="closeBtnClick" />
+      </div>
+    </DxPopup>
+  </div>
+</div>
+
+
+<!--   <CreatorOrgs :is-edit.sync="isEdit" :is-create.sync="isCreate" :isShow="this.editorShow" ref="editorGrid" :levelorg="org"
+      @close:editor="onCloseEditor" />-->
+
+<!--<OrgGrid @info:isEmpty="onIsEmpty" @update:org="onRowUpdate" 
+      @click:org="onClickOrg" ref="orgsGrid" />-->

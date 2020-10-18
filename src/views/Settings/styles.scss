@@ -1,0 +1,53 @@
+.admpage{
+    //background: #2E2E38 no-repeat 50% ;
+    display:flex;
+    width: 100%;
+    height:calc( 100vh - 90px);
+    align-items:baseline;
+    justify-content: center;
+  
+}
+#back{
+    //height: calc(.admpage);    
+    display:flex;
+  //  background-color: white;
+    width: 100%;
+    min-height: 100%;
+    //background:  salmon no-repeat 100% -90px;
+//    justify-cosntent: space-between;
+}
+#content{
+   // height: 100%;
+    width: 40%;
+    min-width: 250px;
+}
+.components{    
+    padding: 10px;
+}
+.roles{
+    width: 35%;
+}
+#org_info{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#caption{
+    display:flex;
+    padding: 5px;
+    flex-direction: row;
+    justify-content: center;
+}
+#detalis{
+    display:flex;
+    padding: 5px;
+    flex-direction: row;
+    justify-content: space-around;
+}
+#static{
+    display:flex;
+    flex-direction: column;
+    width: 60%;
+    height: 100%;
+    align-items:baseline;
+}

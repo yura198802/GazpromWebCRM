@@ -1,0 +1,93 @@
+<div class="main" style="height: 100%">
+  <div>
+    <table id="tb" allign="center">
+         <tr>
+            <td>
+              <div id="bloc1" class="dx-field">
+                <div class="dx-field-label">Дата</div>
+                <div class="dx-field-value">
+                  <DxDateBox :value="datevalue"  type="date" @value-changed="e =>  getPpsData(e.value)" :disabled="switchValue" />
+                </div>
+              </div>
+            </td>
+            <td style="text-align:left">
+              <div class="dx-marked-label">Выбрано :    {{selectedRowKeys.length}}</div>
+              <template v-if="loadeddocscount>0">
+                 <div class="dx-marked-label">Загружено:    {{this.loadeddocscount}}</div>
+              </template>
+            </td>
+            <td style="font-size:75% ;text-align:right">
+              <div class="filtermarked"> 
+                <template v-if="selectedRowKeys.length>0">
+                   <!-- <div class="dx-marked-label">Показаны</div> -->
+                   <div class="dx-field-value">
+                      <DxSwitch :value="true" width="75px" :switched-on-text="'Выбранные'" :switched-off-text="'Все записи'"
+                                v-model="switchValue"  @value-changed="e => switchValueChanged(e.value)"  />
+                   </div>    
+                </template> 
+              </div>         
+            </td>
+            <td>
+              <div id="bloc2"  class="dx-button">
+                <DxButton :disabled='isDisabledButton' class="button" text="Формировать" type="success" @click="makePp" />
+              </div>          
+            </td>
+         </tr>
+    </table>
+  </div>
+
+  <div class="errors">
+    <div
+      v-for="(error, index) in errors"
+      :key="index"
+      class="selected-item"
+    >          
+      <span><b>{{(error.code=="1111" ? "Стек" : "Ошибка" )}}: </b></span>
+      <span>{{error.description}}<br></span>
+    </div>
+  </div>      
+
+
+  <!-- <div> -->
+    <DxDataGrid  id="gridContainer"  ref="dataGridRefName" :data-source="models"
+      :remote-operations="false" :allow-column-reordering="true" :row-alternation-enabled="true"
+      :allow-column-resizing="true" :focused-row-enabled="true" :focused-row-key.sync="focusedRowKey" :show-borders="true"
+      :keyExpr="keyModel" @exporting="onExporting" column-resizing-mode="widget"
+      :column-auto-width = "true" :cell-hint-enabled = "true" 
+      @selection-changed="onSelectionChanged" :column-min-width="50" 
+    >
+  
+      <!-- <DxFilterRow :visible="false" apply-filter="{key: 'auto',name: 'Immediately'}" />    "nextColumn"  -->
+      <DxColumnFixing :enabled="true"/>
+      <DxHeaderFilter :visible="switchValueInverted" />
+      <DxSearchPanel :width="240" placeholder="Найти ..." :search-visible-columns-only="false" :visible="switchValueInverted" />
+      <DxExport :enabled="true" />
+      <DxSummary>
+        <DxTotalItem :column="keyModel" summary-type="count" />
+      </DxSummary>
+      <DxColumn data-field="numPp" data-type="string" caption="№ ПП" :width="100" />
+      <DxColumn data-field="datePp" data-type="date" caption="Дата ПП" :width="100" />
+      <DxColumn data-field="kbk" data-type="string" caption="Кбк" :width="180" />
+      <DxColumn data-field="sumItg" data-type="number" caption="Сумма ПП" :width="110">
+        <DxFormat type="fixedPoint" :precision="2" />
+      </DxColumn>
+      <DxColumn data-field="inn" data-type="string" caption="ИНН" :width="120" />
+      <DxColumn data-field="kpp" data-type="string" caption="КПП" :width="100" />
+      <DxColumn data-field="platName" data-type="string" caption="Получатель"  :width="300"  />
+      <DxColumn data-field="importFile" data-type="string" caption="Файл" :width="150" />
+  
+      <DxPaging :page-size="25" :enabled="true" />
+      <DxScrolling column-rendering-mode="virtual"/>
+      <DxPager :show-page-size-selector="true" :allowed-page-sizes="pageSizes" :show-info="true" :visible="true" />
+      <DxSelection show-check-boxes-mode="always" :mode="multipleMode" :allowSelectAll="false" />
+    </DxDataGrid>
+  <!-- </div> -->
+  
+  <div class = "info">
+    <span>Файлы загружается в каталог, выбранный в настройках броузера<br></span>
+  </div>
+  
+  <DxLoadPanel :position="loadingPosition"  :shading=false
+    :visible.sync="loadingVisible" :show-indicator=true :show-pane=false  :close-on-outside-click=false
+    />
+</div>
